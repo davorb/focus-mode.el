@@ -2,7 +2,13 @@
 
 ;; Copyright (c) 2013 Davor Babic <davor@davor.se>
 
+;;; Commentary: The current version of this library has some issues
+;;; with resizing windows.
+
 ;; Author: Davor Babic
+;; Version: 0.0.1
+;; Created: 2013-12-29
+;; URL: https://github.com/davorb/focus-mode.el
 ;; Keywords: editing, focus, margin
 
 ;; Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -45,3 +51,5 @@
   "iA Writer-like mode for Emacs"
   nil " Focus" nil
   (set-buffer-margins))
+
+;;; focus-mode.el ends here
