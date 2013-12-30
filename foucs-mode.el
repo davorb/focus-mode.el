@@ -2,11 +2,8 @@
 
 ;; Copyright (c) 2013 Davor Babic <davor@davor.se>
 
-;;; Commentary: The current version of this library has some issues
-;;; with resizing windows.
-
 ;; Author: Davor Babic
-;; Version: 0.0.1
+;; Version: 0.0.2
 ;; Created: 2013-12-29
 ;; URL: https://github.com/davorb/focus-mode.el
 ;; Keywords: editing, focus, margin
@@ -43,13 +40,20 @@
                            80 80)) ;full-width 80))
          (move-left 3)
          (margin (/ (- full-width target-width) 2)))
-    (if focus-mode
+    (if (and focus-mode (not (car (window-margins))))
         (set-window-margins (car (get-buffer-window-list (current-buffer)))
                             (- margin move-left) (+ margin move-left)))))
+
+(defun on-focus-mode-disable ()
+  (set-window-margins (car (get-buffer-window-list (current-buffer))) 0 0)
+  (remove-hook 'focus-mode-off-hook 'on-focus-mode-disable)
+  (remove-hook 'window-configuration-change-hook 'set-buffer-margins))
 
 (define-minor-mode focus-mode
   "iA Writer-like mode for Emacs"
   nil " Focus" nil
-  (set-buffer-margins))
+  (set-buffer-margins)
+  (add-hook 'focus-mode-off-hook 'on-focus-mode-disable)
+  (add-hook 'window-configuration-change-hook 'set-buffer-margins))
 
 ;;; focus-mode.el ends here
